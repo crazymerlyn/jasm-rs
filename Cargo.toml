@@ -1,0 +1,6 @@
+[package]
+name = "jasm"
+version = "0.1.0"
+authors = ["CrazyMerlyn <crazy.d.merlyn@gmail.com>"]
+
+[dependencies]
