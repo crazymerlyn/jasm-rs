@@ -78,7 +78,66 @@ impl Serializable for ConstantType {
                 CONSTANT_UTF8_TAG.serialize(out)?;
                 modified_utf8(s).serialize(out)
             }
-            _ => Ok(())
+            ConstantType::Integer(val) => {
+                CONSTANT_INTEGER_TAG.serialize(out)?;
+                val.serialize(out)
+            }
+            ConstantType::Float(val) => {
+                CONSTANT_FLOAT_TAG.serialize(out)?;
+                val.serialize(out)
+            }
+            ConstantType::Long(val1, val2) => {
+                CONSTANT_LONG_TAG.serialize(out)?;
+                val1.serialize(out)?;
+                val2.serialize(out)
+            }
+            ConstantType::Double(val1, val2) => {
+                CONSTANT_DOUBLE_TAG.serialize(out)?;
+                val1.serialize(out)?;
+                val2.serialize(out)
+            }
+            ConstantType::Class(index) => {
+                CONSTANT_CLASS_TAG.serialize(out)?;
+                index.serialize(out)
+            }
+            ConstantType::String(index) => {
+                CONSTANT_STRING_TAG.serialize(out)?;
+                index.serialize(out)
+            }
+            ConstantType::Fieldref(class, name_and_type) => {
+                CONSTANT_FIELDREF_TAG.serialize(out)?;
+                class.serialize(out)?;
+                name_and_type.serialize(out)
+            }
+            ConstantType::Methodref(class, name_and_type) => {
+                CONSTANT_METHODREF_TAG.serialize(out)?;
+                class.serialize(out)?;
+                name_and_type.serialize(out)
+            }
+            ConstantType::InterfaceMethodref(class, name_and_type) => {
+                CONSTANT_INTERFACE_METHODREF_TAG.serialize(out)?;
+                class.serialize(out)?;
+                name_and_type.serialize(out)
+            }
+            ConstantType::NameAndType(name, desc) => {
+                CONSTANT_NAME_AND_TYPE_TAG.serialize(out)?;
+                name.serialize(out)?;
+                desc.serialize(out)
+            }
+            ConstantType::MethodHandle(kind, index) => {
+                CONSTANT_METHOD_HANDLE_TAG.serialize(out)?;
+                kind.serialize(out)?;
+                index.serialize(out)
+            }
+            ConstantType::MethodType(desc) => {
+                CONSTANT_METHOD_TYPE_TAG.serialize(out)?;
+                desc.serialize(out)
+            }
+            ConstantType::InvokeDynamic(attr, name_and_type) => {
+                CONSTANT_INVOKE_DYNAMIC_TAG.serialize(out)?;
+                attr.serialize(out)?;
+                name_and_type.serialize(out)
+            }
         }
     }
 }
