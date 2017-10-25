@@ -1,3 +1,7 @@
+use serializer::Serializable;
+use std::io::Write;
+use std::io::Result;
+
 use constants::Constants;
 use interface::Interface;
 use field::Field;
@@ -5,15 +9,33 @@ use method::Method;
 use attribute::Attribute;
 
 pub struct Class {
-    pub magic_number: u32,
-    pub minor_version: u16,
-    pub major_version: u16,
-    pub constants: Constants,
-    pub access_flags: u16,
-    pub this_class: u16,
-    pub super_class: u16,
-    pub interfaces: Vec<Interface>,
-    pub fields: Vec<Field>,
-    pub methods: Vec<Method>,
-    pub attributes: Vec<Attribute>,
+    magic_number: u32,
+    minor_version: u16,
+    major_version: u16,
+    constants: Constants,
+    access_flags: u16,
+    this_class: u16,
+    super_class: u16,
+    interfaces: Vec<Interface>,
+    fields: Vec<Field>,
+    methods: Vec<Method>,
+    attributes: Vec<Attribute>,
 }
+
+impl Serializable for Class {
+    fn serialize<W: Write>(&self, out: &mut W) -> Result<()> {
+        self.magic_number.serialize(out)?;
+        self.minor_version.serialize(out)?;
+        self.major_version.serialize(out)?;
+        self.constants.serialize(out)?;
+        self.access_flags.serialize(out)?;
+        self.this_class.serialize(out)?;
+        self.super_class.serialize(out)?;
+        self.interfaces.serialize(out)?;
+        self.fields.serialize(out)?;
+        self.methods.serialize(out)?;
+        self.attributes.serialize(out)?;
+        Ok(())
+    }
+}
+
