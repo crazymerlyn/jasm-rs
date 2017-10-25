@@ -15,6 +15,13 @@ impl<T: Serializable> Serializable for Vec<T> {
     }
 }
 
+impl Serializable for u8 {
+    fn serialize<W: Write>(&self, out: &mut W) -> Result<()> {
+        out.write(&[*self])?;
+        Ok(())
+    }
+}
+
 impl Serializable for u16 {
     fn serialize<W: Write>(&self, out: &mut W) -> Result<()> {
         out.write(&[(self >> 8) as u8, (self & 0xff) as u8])?;
