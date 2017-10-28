@@ -4,6 +4,7 @@ pub mod attribute;
 pub mod interface;
 pub mod field;
 pub mod method;
+pub mod exception;
 pub mod serializer;
 pub mod common;
 
